@@ -1,0 +1,25 @@
+{
+  "name": "tiny-parser",
+  "version": "1.0.0",
+  "description": "'A tiny parser for fun ...'",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Adamwu1992/tiny-parser.git"
+  },
+  "keywords": [
+    "parser"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Adamwu1992/tiny-parser/issues"
+  },
+  "homepage": "https://github.com/Adamwu1992/tiny-parser#readme",
+  "devDependencies": {
+    "jsdoc-to-markdown": "^4.0.1"
+  }
+}
