@@ -71,3 +71,28 @@
  * 词法分析阶段，文本将会被转化成tokens；
  * 语法分析阶段，将tokens构建成有结构的dom树。
  */
+
+const LexicalParser = require('./LexicalParser')
+const SyntacticParser = require('./SyntacticalParser')
+
+function parser(input) {
+  const syntacticParser = new SyntacticParser
+  const lexicalParser = new LexicalParser(syntacticParser)
+
+  let process = ''
+  for(let i = 0, l = input.length; i < l; i++) {
+    const char = input[i]
+    try {
+      lexicalParser.receiveInput(char)
+      process += char
+    } catch(e) {
+      console.error('interrupt at\n', process)
+      break;
+    }
+  }
+
+  return syntacticParser.output
+}
+
+
+module.exports = parser

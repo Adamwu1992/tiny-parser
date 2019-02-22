@@ -19,19 +19,19 @@
  * ```
  * 0: TagOpen { name: 'p' }
  * 1: Attribute { name: 'class', value: 'header' }
- * 2: Text: { name: 'Several '}
+ * 2: 'Several '
  * 3: TagOpen: { name: 'em' }
- * 4: Text: { name: 'emphasized words' }
+ * 4: 'emphasized words'
  * 5: TagClose: { name: 'em' }
- * 6: Text: { name: ' appear ' }
+ * 6: ' appear '
  * 7: TagOpen: { name: 'strong' }
- * 8: Text: { name: ' in this ' }
+ * 8: ' in this '
  * 9: TagClose: { name: 'strong' }
- * 10: Text: { name: ' sentence, dear.' }
+ * 10: ' sentence, dear.'
  * 11: TagOpen: { name: 'img' }
  * 12: Attribute: { name: 'src', value: 'xx.png' }
  * 13: Attribute: { name: 'crossOrigin' }
- * 14: TagClose: { name: 'self-closing' }
+ * 14: TagSelfClose: { }
  * 15: TagClose: { name: 'p' }
  * ```
  * 
@@ -41,25 +41,16 @@
 const {
   isLetter,
   isWhiteSpace,
-  unexpectedChar
+  unexpectedChar,
+  TagOpen,
+  TagClose,
+  TagSelfClose,
+  Attr
 } = require('./utils')
 
-// <xx>
-class TagOpen {}
-
-// </xx>
-class TagClose {}
-
-// />
-class TagSelfClose {}
-
-class Text {}
-
-class Attr {}
 
 
-
-function LexicalParser() {
+function LexicalParser(syntacticParser) {
 
   const globalTokens = []
   let state = data
@@ -73,15 +64,27 @@ function LexicalParser() {
 
   function collectToken({ type } = { type: 'token' }) {
     if (type === 'token') {
+
+      if (syntacticParser) {
+        syntacticParser.receiveToken(token)
+      }
+
       if (token) {
         globalTokens.push(token)
       }
+      
       token = null
     } else {
+
+      if (syntacticParser) {
+        syntacticParser.receiveToken(text)
+      }
+
       if (text) {
         globalTokens.push(text)
-        text = ''
       }
+
+      text = ''
     }
   }
 

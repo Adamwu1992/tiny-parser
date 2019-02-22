@@ -15,11 +15,31 @@ function unexpectedChar(char) {
   throw new Error(`${char} is unexpected`)
 }
 
+
+/**
+ * token types
+ */
+
+// <xx>
+class TagOpen {}
+
+// </xx>
+class TagClose {}
+
+// />
+class TagSelfClose {}
+
+class Attr {}
+
 module.exports = {
   isUpperCaseLetter,
   isLowerCaseLetter,
   isLetter,
   isWhiteSpace,
   needInput,
-  unexpectedChar
+  unexpectedChar,
+  TagOpen,
+  TagClose,
+  TagSelfClose,
+  Attr
 }
